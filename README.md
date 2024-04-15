@@ -7,3 +7,5 @@
 3) Importing static resources using "import" and using relative paths.
 
 4) Adding Polyfills for ES6 features.
+
+5) Listening for Load and hashchange events on the window object, and reading the recipe id from the hash.
