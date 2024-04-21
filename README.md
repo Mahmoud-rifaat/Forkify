@@ -11,3 +11,5 @@
 5) Listening for Load and hashchange events on the window object, and reading the recipe id from the hash.
 
 6) Refactoring code by separating Model (for business logic and API usage), View (for generating markup and rendering), Controller (for Controlling data flow between the first two and handling events).
+
+7) Adding configuration file and helpers module.
