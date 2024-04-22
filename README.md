@@ -13,3 +13,9 @@
 6) Refactoring code by separating Model (for business logic and API usage), View (for generating markup and rendering), Controller (for Controlling data flow between the first two and handling events).
 
 7) Adding configuration file and helpers module.
+
+8) Implementing the Publisher-Subscriber Pattern to move Event Handlers into view, creating a method(publisher) to add event handlers(subscriber) on events, and calling it from the controller.
+
+9) Propagating errors to the controllers by rethrowing the error in the catch block, to centralize the error handling in one place.
+
+10) Implementing Error and success messages in the presentation logic.
