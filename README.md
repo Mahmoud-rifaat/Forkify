@@ -19,3 +19,5 @@
 9) Propagating errors to the controllers by rethrowing the error in the catch block, to centralize the error handling in one place.
 
 10) Implementing Error and success messages in the presentation logic.
+
+11) Implementing search mechanism using the publisher-subscriber pattern.
