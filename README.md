@@ -21,3 +21,6 @@
 10) Implementing Error and success messages in the presentation logic.
 
 11) Implementing search mechanism using the publisher-subscriber pattern.
+
+12) Creating a parent View class for all the views to inherit.
+
