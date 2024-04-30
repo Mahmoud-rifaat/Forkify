@@ -1,11 +1,13 @@
-import { API_URL } from "./config";
+import { API_URL, RESULTS_PER_PAGE } from "./config";
 import { getJSON } from "./helpers";
 
 export const state = {
     recipe: {},
     search: {
         query: '',
-        result: []
+        result: [],
+        page: 1,
+        resultsPerPage: RESULTS_PER_PAGE
     }
 }
 
@@ -52,4 +54,11 @@ export const loadSearchResults = async function (query) {
     }
 }
 
-// loadSearchResults('pizza');
+// We consider that "loadSearchResults" is already called and the global state "search.result" is set with data.
+export const getSearchResultsPage = function (page = state.search.page) {
+    state.search.page = page;
+    const first = (page - 1) * state.search.resultsPerPage;
+    const last = page * state.search.resultsPerPage;
+
+    return state.search.result.slice(first, last);
+}

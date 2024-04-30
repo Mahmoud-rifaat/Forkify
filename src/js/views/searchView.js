@@ -13,7 +13,7 @@ class SearchView extends View {
         this._parentElement.querySelector('.search__field').value = '';
     }
 
-    addHandlerRender(handler) {
+    addHandlerSearch(handler) {
         this._parentElement.addEventListener('submit', function (e) {
             e.preventDefault();
             handler();
