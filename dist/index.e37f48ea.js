@@ -639,10 +639,17 @@ const controlPagination = function(page) {
     // Render NEW pagination
     (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
 };
+const controlServings = function(newServings) {
+    // update servings, ingredients quantities for the recipe in state.
+    _modelJs.updateServings(newServings);
+    // update the UI (servings and ingredients quantities)
+    (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
+};
 function Init() {
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
+    (0, _recipeViewJsDefault.default).addHandlerUpdateServings(controlServings);
 }
 Init();
 
@@ -1886,6 +1893,7 @@ parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchResults", ()=>loadSearchResults);
 parcelHelpers.export(exports, "getSearchResultsPage", ()=>getSearchResultsPage);
+parcelHelpers.export(exports, "updateServings", ()=>updateServings);
 var _config = require("./config");
 var _helpers = require("./helpers");
 const state = {
@@ -1937,6 +1945,12 @@ const getSearchResultsPage = function(page = state.search.page) {
     const first = (page - 1) * state.search.resultsPerPage;
     const last = page * state.search.resultsPerPage;
     return state.search.result.slice(first, last);
+};
+const updateServings = function(newServings) {
+    state.recipe.ingredients.forEach((ingredient)=>{
+        ingredient.quantity = ingredient.quantity / state.recipe.servings * newServings;
+    });
+    state.recipe.servings = newServings;
 };
 
 },{"./config":"k5Hzs","./helpers":"hGI1E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"k5Hzs":[function(require,module,exports) {
@@ -2609,6 +2623,14 @@ class RecipeView extends (0, _viewDefault.default) {
             "load"
         ].forEach((event)=>window.addEventListener(event, handler));
     }
+    addHandlerUpdateServings(handler) {
+        this._parentElement.addEventListener("click", function(e) {
+            const btn = e.target.closest(".btn--update-servings");
+            if (!btn) return;
+            const newServings = +btn.dataset.updateTo;
+            if (newServings > 0) handler(newServings);
+        });
+    }
     _generateMarkup() {
         return `
         <figure class="recipe__fig">
@@ -2631,15 +2653,15 @@ class RecipeView extends (0, _viewDefault.default) {
                 <use href="${0, _iconsSvgDefault.default}#icon-users"></use>
                 </svg>
                 <span class="recipe__info-data recipe__info-data--people">${this._data.servings}</span>
-                <span class="recipe__info-text">servings</span>
+                <span class="recipe__info-text">${this._data.servings > 1 ? "servings" : "serving"}</span>
 
                 <div class="recipe__info-buttons">
-                <button class="btn--tiny btn--increase-servings">
+                <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings - 1}">
                     <svg>
                     <use href="${0, _iconsSvgDefault.default}#icon-minus-circle"></use>
                     </svg>
                 </button>
-                <button class="btn--tiny btn--increase-servings">
+                <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings + 1}">
                     <svg>
                     <use href="${0, _iconsSvgDefault.default}#icon-plus-circle"></use>
                     </svg>
@@ -2690,14 +2712,14 @@ class RecipeView extends (0, _viewDefault.default) {
     #generateMarkupIngredient(ingredient) {
         return `
         <li class="recipe__ingredient">
-        <svg class="recipe__icon">
-        <use href="${0, _iconsSvgDefault.default}#icon-check"></use>
-        </svg>
-        <div class="recipe__quantity">${(0, _fractyDefault.default)(ingredient.quantity)}</div>
-        <div class="recipe__description">
-        <span class="recipe__unit">${ingredient.unit}</span>
-        ${ingredient.description}
-        </div>
+            <svg class="recipe__icon">
+                <use href="${0, _iconsSvgDefault.default}#icon-check"></use>
+            </svg>
+            <div class="recipe__quantity">${(0, _fractyDefault.default)(ingredient.quantity)}</div>
+            <div class="recipe__description">
+                <span class="recipe__unit">${ingredient.unit}</span>
+                ${ingredient.description}
+            </div>
         </li>
         `;
     }

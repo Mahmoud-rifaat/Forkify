@@ -11,6 +11,19 @@ class RecipeView extends View {
         ['hashchange', 'load'].forEach(event => window.addEventListener(event, handler));
     }
 
+    addHandlerUpdateServings(handler) {
+        this._parentElement.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn--update-servings');
+
+            if (!btn) return;
+
+            const newServings = +(btn.dataset.updateTo);
+
+            if (newServings > 0)
+                handler(newServings);
+        })
+    }
+
     _generateMarkup() {
         return `
         <figure class="recipe__fig">
@@ -36,15 +49,15 @@ class RecipeView extends View {
                 </svg>
                 <span class="recipe__info-data recipe__info-data--people">${this._data.servings
             }</span>
-                <span class="recipe__info-text">servings</span>
+                <span class="recipe__info-text">${this._data.servings > 1 ? 'servings' : 'serving'}</span>
 
                 <div class="recipe__info-buttons">
-                <button class="btn--tiny btn--increase-servings">
+                <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings - 1}">
                     <svg>
                     <use href="${icons}#icon-minus-circle"></use>
                     </svg>
                 </button>
-                <button class="btn--tiny btn--increase-servings">
+                <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings + 1}">
                     <svg>
                     <use href="${icons}#icon-plus-circle"></use>
                     </svg>
@@ -99,14 +112,14 @@ class RecipeView extends View {
     #generateMarkupIngredient(ingredient) {
         return `
         <li class="recipe__ingredient">
-        <svg class="recipe__icon">
-        <use href="${icons}#icon-check"></use>
-        </svg>
-        <div class="recipe__quantity">${fracty(ingredient.quantity)}</div>
-        <div class="recipe__description">
-        <span class="recipe__unit">${ingredient.unit}</span>
-        ${ingredient.description}
-        </div>
+            <svg class="recipe__icon">
+                <use href="${icons}#icon-check"></use>
+            </svg>
+            <div class="recipe__quantity">${fracty(ingredient.quantity)}</div>
+            <div class="recipe__description">
+                <span class="recipe__unit">${ingredient.unit}</span>
+                ${ingredient.description}
+            </div>
         </li>
         `;
     }
