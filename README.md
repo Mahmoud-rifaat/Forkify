@@ -27,3 +27,7 @@
 12) Creating a parent View class for all the views to inherit.
 
 13) Implementing Pagination from scratch on data in global state.
+
+14) Implementing increase/decrease servings (manipulating data in global state).
+
+15) Developing a DOM updating Algorithm to avoid page rerendering and only rerender changed components (not time efficient O(n^2)).

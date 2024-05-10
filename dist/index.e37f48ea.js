@@ -606,6 +606,8 @@ const controlRecipes = async function() {
         //  Guard Clause
         if (!id) return;
         (0, _recipeViewJsDefault.default).renderSpinner();
+        // 0) Update results view to mark selected search result
+        (0, _resultsViewJsDefault.default).update(_modelJs.getSearchResultsPage());
         // 1) Loading recipe
         await _modelJs.loadRecipe(id);
         // 2) Rendering recipe
@@ -643,7 +645,8 @@ const controlServings = function(newServings) {
     // update servings, ingredients quantities for the recipe in state.
     _modelJs.updateServings(newServings);
     // update the UI (servings and ingredients quantities)
-    (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
+    // recipeView.render(model.state.recipe);
+    (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
 };
 function Init() {
     (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes);
@@ -1919,7 +1922,6 @@ const loadRecipe = async function(id) {
             cookingTime: recipe.cooking_time,
             ingredients: recipe.ingredients
         };
-    // console.log(state.recipe);
     } catch (error) {
         throw error;
     }
@@ -2873,6 +2875,23 @@ class View {
         this._clear();
         this._parentElement.insertAdjacentHTML("afterbegin", markup);
     }
+    update(data) {
+        this._data = data;
+        const newMarkup = this._generateMarkup();
+        // Creating a virtual DOM that lives in the memory to use it for node comparison
+        const newDom = document.createRange().createContextualFragment(newMarkup);
+        const newElements = Array.from(newDom.querySelectorAll("*"));
+        const currentElements = Array.from(this._parentElement.querySelectorAll("*"));
+        newElements.forEach((newEl, i)=>{
+            const curEl = currentElements[i];
+            // Update changed text
+            if (!newEl.isEqualNode(curEl) && newEl.firstChild.nodeValue.trim() !== "") curEl.textContent = newEl.textContent;
+            // Update changed attributes
+            if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>{
+                curEl.setAttribute(attr.name, attr.value);
+            });
+        });
+    }
     _clear() {
         this._parentElement.innerHTML = "";
     }
@@ -2958,9 +2977,10 @@ class ResultsView extends (0, _viewDefault.default) {
         return this._data.map(this.#generateMarkupPreview).join("");
     }
     #generateMarkupPreview(recipe) {
+        const id = window.location.hash.slice(1);
         return `
         <li class="preview">
-            <a class="preview__link " href="#${recipe.id}">
+            <a class="preview__link ${recipe.id === id ? "preview__link--active" : ""}" href="#${recipe.id}">
                 <figure class="preview__fig">
                     <img src="${recipe.image}" alt="${recipe.title}" />
                 </figure>
