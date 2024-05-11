@@ -31,3 +31,5 @@
 14) Implementing increase/decrease servings (manipulating data in global state).
 
 15) Developing a DOM updating Algorithm to avoid page rerendering and only rerender changed components (not time efficient O(n^2)).
+
+16) Implementing Bookmarking functionality.
