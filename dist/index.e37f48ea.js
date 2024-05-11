@@ -1919,7 +1919,7 @@ const state = {
         page: 1,
         resultsPerPage: (0, _config.RESULTS_PER_PAGE)
     },
-    bookmarks: []
+    bookmarks: JSON.parse(localStorage.getItem("bookmarks")) || []
 };
 const loadRecipe = async function(id) {
     try {
@@ -1969,14 +1969,19 @@ const updateServings = function(newServings) {
     });
     state.recipe.servings = newServings;
 };
+const persistBookmarks = function() {
+    localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+};
 const addBookmark = function(recipe) {
     state.bookmarks.push(recipe);
     state.recipe.bookmarked = true;
+    persistBookmarks();
 };
 const deleteBookmark = function(id) {
     const index = state.bookmarks.findIndex((rec)=>rec.id === id);
     state.bookmarks.splice(index, 1);
     state.recipe.bookmarked = false;
+    persistBookmarks();
 };
 
 },{"./config":"k5Hzs","./helpers":"hGI1E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"k5Hzs":[function(require,module,exports) {

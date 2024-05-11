@@ -9,7 +9,7 @@ export const state = {
         page: 1,
         resultsPerPage: RESULTS_PER_PAGE
     },
-    bookmarks: []
+    bookmarks: JSON.parse(localStorage.getItem('bookmarks')) || []
 }
 
 
@@ -75,13 +75,19 @@ export const updateServings = function (newServings) {
     state.recipe.servings = newServings;
 }
 
+const persistBookmarks = function () {
+    localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+}
+
 export const addBookmark = function (recipe) {
     state.bookmarks.push(recipe);
     state.recipe.bookmarked = true;
+    persistBookmarks();
 }
 
 export const deleteBookmark = function (id) {
     const index = state.bookmarks.findIndex(rec => rec.id === id);
     state.bookmarks.splice(index, 1);
     state.recipe.bookmarked = false;
+    persistBookmarks();
 }

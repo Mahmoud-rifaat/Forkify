@@ -32,4 +32,9 @@
 
 15) Developing a DOM updating Algorithm to avoid page rerendering and only rerender changed components (not time efficient O(n^2)).
 
-16) Implementing Bookmarking functionality.
+16) Implementing Bookmarking functionality, storing it in global state, persisting it in the local storage.
+
+
+
+Current bugs:
+when I have more than one bookmark and I choose one of them and try to unmark it, a different bookmark is unmarked and the one I just unmarked still bookmarked, then when I try to bookmark it again, I get two of it in my bookmarks.
