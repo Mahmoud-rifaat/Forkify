@@ -1,4 +1,4 @@
-# Forkify: A Recipe App with Vanilla JS
+# Forkify: A Recipe App with Vanilla JS - MVC
 
 Forkify is a recipe application built entirely with vanilla JavaScript! This project served as a deep dive into building a complex web application from scratch, while implementing best practices and exploring various functionalities.
 
