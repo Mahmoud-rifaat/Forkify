@@ -1,43 +1,51 @@
-# Forkify
+# Forkify: A Recipe App with Vanilla JS
 
-0) Using parcel as our module bundler.
+Forkify is a recipe application built entirely with vanilla JavaScript! This project served as a deep dive into building a complex web application from scratch, while implementing best practices and exploring various functionalities.
 
-1) Fetching data from a third-party API using the Fetch API, handling Async operation using ES6 features (promises and Async Await).
+## Project Overview:
 
-2) Rendering content by directly inserting it into the DOM.
+Forkify allows users to:
 
-3) Importing static resources using "import" and using relative paths.
+- Browse recipes fetched from a third-party API.
+- Search for specific recipes.
+- View detailed recipe information with servings adjustments.
+- Bookmark recipes for later reference.
+- (Bonus!) Upload recipes to a remote API (work in progress).
 
-4) Adding Polyfills for ES6 features.
+## Technical Highlights:
 
-5) Listening for Load and "hashchange" events on the window object, and reading the recipe id from the hash.
+- **MVC Architecture:** Built with a clear separation of concerns (Model, View, Controller) for maintainability.
+- **Modern JavaScript:** Utilizes promises, async/await, and ES6 modules for a clean and efficient codebase.
+- **Event-Driven:** Responds to user interactions like "load" and "hashchange" events for dynamic recipe display.
+- **Modular Design:** Leverages a configuration file and the Publisher-Subscriber pattern for better organization.
+- **Robust Error Handling:** Centralized error management in the controller ensures a smooth user experience.
+- **Advanced Features:** Implements search, pagination, servings manipulation, bookmarking with local storage persistence, and a DOM update algorithm (for efficiency improvements).
 
-6) Refactoring code by separating Model (for business logic and API usage), View (for generating markup and rendering), Controller (for Controlling data flow between the first two and handling events).
+## Live Demo:
 
-7) Adding configuration file and helpers module.
+Check out the live version of Forkify in action: [Forkify Live Demo](https://forkify-refaat.netlify.app/)
 
-8) Implementing the Publisher-Subscriber Pattern to move Event Handlers into view, creating a method(publisher) to add event handlers(subscriber) on events, and calling it from the controller.
+## Current Bugs:
 
-9) Propagating errors to the controllers by re-throwing the error in the catch block, to centralize the error handling in one place.
+There's a known issue with the bookmarking functionality where unmarking a specific recipe might affect a different one. This is due to state management and will be addressed in a future update.
 
-10) Implementing Error and success messages in the presentation logic.
+## TODO:
 
-11) Implementing search mechanism using the publisher-subscriber pattern.
+- **Function Documentation:** Comprehensive documentation for all functions will be added using JSDoc or a similar tool.
 
-12) Creating a parent View class for all the views to inherit.
+## Inspiration:
 
-13) Implementing Pagination from scratch on data in global state.
+This project was heavily influenced by the valuable learnings from Jonas Schmedtmann's JavaScript Mastercourse.
 
-14) Implementing increase/decrease servings (manipulating data in global state).
+## Learning Outcomes:
 
-15) Developing a DOM updating Algorithm to avoid page rerendering and only rerender changed components (not time efficient O(n^2)).
+This project provided a valuable hands-on experience in building a feature-rich web application with vanilla JavaScript. Key takeaways include:
 
-16) Implementing Bookmarking functionality, storing it in global state, persisting it in the local storage.
+- Understanding the importance of MVC architecture for web app development.
+- Mastering modern JavaScript features for cleaner and more efficient code.
+- Implementing robust event handling and user interaction patterns.
+- Leveraging design patterns and modularity for better code organization.
+- Building a comprehensive error handling strategy.
+- Implementing advanced features like search, pagination, and data manipulation.
 
-17) Uploading a recipe to a remote api.
-
-Current bugs:
-when I have more than one bookmark and I choose one of them and try to unmark it, a different bookmark is unmarked and the one I just unmarked still bookmarked, then when I try to bookmark it again, I get two of it in my bookmarks.
-
-TODO:
-Writing documentation for functions
+Feel free to explore the codebase and learn more about the inner workings of Forkify!
