@@ -34,7 +34,10 @@
 
 16) Implementing Bookmarking functionality, storing it in global state, persisting it in the local storage.
 
-
+17) Uploading a recipe to a remote api.
 
 Current bugs:
 when I have more than one bookmark and I choose one of them and try to unmark it, a different bookmark is unmarked and the one I just unmarked still bookmarked, then when I try to bookmark it again, I get two of it in my bookmarks.
+
+TODO:
+Writing documentation for functions
